@@ -1,0 +1,1180 @@
+:root {
+    --bgColor: rgb(50, 50, 50);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper {
+    width: 1400px;
+    height: 800px;
+    position: absolute;
+    border: 2px solid var(--bgColor);
+    overflow: hidden;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.title{
+    text-align: center;
+    color: aliceblue;
+}
+.div1{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top:100px;
+    left:650px;
+    background-color: rgb(255, 115, 0);
+    border-radius: 50px;
+    animation-name: anim1;
+    animation-duration: 25s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.div2{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top:187.87px;
+    left:862.1px;
+    background-color: purple;
+    border-radius: 50px;
+    animation-name: anim2;
+    animation-duration: 25s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.div3{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top:400px;
+    left:950px;
+    background-color: rgb(92, 43, 226);
+    border-radius: 50px;
+    animation-name: anim3;
+    animation-duration: 25s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.div4{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top:612.13px;
+    left:862.1px;
+    background-color: rgb(0, 113, 128);
+    border-radius: 50px;
+    animation-name: anim4;
+    animation-duration: 25s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.div5{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top:700px;
+    left:650px;
+    background-color: rgb(64, 224, 91);
+    border-radius: 50px;
+    animation-name: anim5;
+    animation-duration: 25s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.div6{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top:612.13px;
+    left:437.87px;
+    background-color: rgb(141, 224, 64);
+    border-radius: 50px;
+    animation-name: anim6;
+    animation-duration: 25s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.div7{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top:400px;
+    left:350px;
+    background-color: yellow;
+    border-radius: 50px;
+    animation-name: anim7;
+    animation-duration: 25s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.div8{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top:187.87px;
+    left:437.87px;
+    background-color: red;
+    border-radius: 50px;
+    animation-name: anim8;
+    animation-duration: 25s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes anim1 {
+    from {
+        transform:translate(212.13px,87.87px);
+    }
+
+    3%{
+        transform:translate(300px,300px);
+    }
+
+    6%{
+        transform:translate(212.13px,512.13px);
+    }
+
+    9%{
+        transform:translate(0px,600px);
+    }
+
+    12%{
+        transform:translate(-212.13px,512.13px);
+    }
+
+    15%{
+        transform:translate(-300px,300px);
+    }
+
+    18%{
+        transform:translate(-212.13px,87.87px);
+    }
+
+    21%{
+        transform:translate(0px,0px);
+    }
+
+    24% {
+        transform:translate(212.13px,87.87px);
+    }
+
+    27%{
+        transform:translate(300px,300px);
+    }
+
+    30%{
+        transform:translate(212.13px,512.13px);
+    }
+
+    33%{
+       transform:translate(0px,600px);
+    }
+
+    36%{
+        transform:translate(-212.13px,512.13px);
+    }
+
+    39%{
+        transform:translate(-300px,300px);
+    }
+
+    42%{
+        transform:translate(-212.13px,87.87px);
+    }
+
+    45%{
+        transform:translate(0px,0px);
+      
+    }
+
+    47% {
+        transform:translate(212.13px,87.87px);
+    }
+
+    49%{
+        transform:translate(300px,300px);
+    }
+
+    51%{
+        transform:translate(212.13px,512.13px);
+    }
+
+    53%{
+        transform:translate(0px,600px);
+    }
+
+    55%{
+        transform:translate(-212.13px,512.13px);
+    }
+
+    57%{
+       transform:translate(-300px,300px);
+    }
+
+    59%{
+        transform:translate(-212.13px,87.87px);
+    }
+
+    61%{
+        transform:translate(0px,0px);
+        background-color: rgb(255, 115, 0);
+    }
+
+    70%{
+        transform:translate(0px,300px);
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    77%{
+        transform:translate(0px,300px) rotate(180deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    84%{
+        transform:translate(0px,300px) rotate(720deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    91%{
+        transform:translate(0px,300px) rotate(2080deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    to{
+        transform:translate(0px,-900px);
+        background-color: white;
+        border-radius: 0px;
+    }
+}
+
+@keyframes anim2 {
+    from {
+        transform:translate(87.87px,212.13px);
+    }
+
+    3%{
+        transform:translate(0px,424.26px);
+    }
+
+    6%{
+        transform:translate(-212.13px,512.13px);
+    }
+
+    9%{
+        transform:translate(-424.26px,424.26px);
+    }
+
+    12%{
+        transform:translate(-512.13px,212.13px);
+    }
+
+    15%{
+        transform:translate(-424.26px,0px);
+    }
+
+    18%{
+        transform:translate(-212.13px,-87.87px);
+    }
+
+    21%{
+        transform:translate(0px,0px);
+    }
+
+    24% {
+        transform:translate(87.87px,212.13px);
+    }
+
+    27%{
+        transform:translate(0px,424.26px);
+    }
+
+    30%{
+        transform:translate(-212.13px,512.13px);
+    }
+
+    33%{
+        transform:translate(-424.26px,424.26px);
+    }
+
+    36%{
+        transform:translate(-512.13px,212.13px);
+    }
+
+    39%{
+        transform:translate(-424.26px,0px);
+    }
+
+    42%{
+        transform:translate(-212.13px,-87.87px);
+    }
+
+    45%{
+        transform:translate(0px,0px);
+    }
+    47% {
+        transform:translate(87.87px,212.13px);
+    }
+
+    49%{
+        transform:translate(0px,424.26px);
+    }
+
+    51%{
+        transform:translate(-212.13px,512.13px);
+    }
+
+    53%{
+        transform:translate(-424.26px,424.26px);
+    }
+
+    55%{
+        transform:translate(-512.13px,212.13px);
+    }
+
+    57%{
+        transform:translate(-424.26px,0px);
+    }
+
+    59%{
+        transform:translate(-212.13px,-87.87px);
+    }
+
+    61%{
+        transform:translate(0px,0px);
+        background-color: purple;
+    }
+
+    70%{
+        transform:translate(-212.13px,212.13px);
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    77%{
+        transform:translate(-212.13px,212.13px) rotate(180deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    84%{
+        transform:translate(-212.13px,212.13px) rotate(720deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    91%{
+        transform:translate(-212.13px,212.13px) rotate(2080deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    to{
+        transform:translate(900px,-900px);
+        background-color: white;
+        border-radius: 0px;
+    }
+}
+
+@keyframes anim3 {
+    from {
+        transform:translate(-87.87px,212.13px);
+    }
+
+    3%{
+        transform:translate(-300px,300px);
+    }
+
+    6%{
+        transform:translate(-512.13px,212.13px);
+    }
+
+    9%{
+        transform:translate(-600px,0px);
+    }
+
+    12%{
+        transform:translate(-512.13px,-212.13px);
+    }
+
+    15%{
+        transform:translate(-300px,-300px);
+    }
+
+    18%{
+        transform:translate(-87.87px,-212.13px);
+    }
+
+    21%{
+        transform:translate(0px,0px);
+    }
+
+    24% {
+        transform:translate(-87.87px,212.13px);
+    }
+
+    27%{
+        transform:translate(-300px,300px);
+    }
+
+    30%{
+        transform:translate(-512.13px,212.13px);
+    }
+
+    33%{
+        transform:translate(-600px,0px);
+    }
+
+    36%{
+        transform:translate(-512.13px,-212.13px);
+    }
+
+    39%{
+        transform:translate(-300px,-300px);
+    }
+
+    42%{
+        transform:translate(-87.87px,-212.13px);
+    }
+
+    45%{
+        transform:translate(0px,0px);
+    }
+
+    47% {
+        transform:translate(-87.87px,212.13px);
+    }
+
+    49%{
+        transform:translate(-300px,300px);
+    }
+
+    51%{
+        transform:translate(-512.13px,212.13px);
+    }
+
+    53%{
+        transform:translate(-600px,0px);
+    }
+
+    55%{
+        transform:translate(-512.13px,-212.13px);
+    }
+
+    57%{
+        transform:translate(-300px,-300px);
+    }
+
+    59%{
+        transform:translate(-87.87px,-212.13px);
+    }
+
+    61%{
+        transform:translate(0px,0px);
+        background-color: rgb(92, 43, 226);
+    }
+ 
+
+
+    70%{
+        transform:translate(-300px,0px);
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    77%{
+        transform:translate(-300px,0px) rotate(180deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    84%{
+        transform:translate(-300px,0px) rotate(720deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    91%{
+        transform:translate(-300px,0px) rotate(2080deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    to{
+        transform:translate(900px,0px);
+        background-color: white;
+        border-radius: 0px;
+    }
+}
+
+@keyframes anim4 {
+    from {
+        transform:translate(-212.13px,87.87px);
+    }
+
+    3%{
+        transform:translate(-424.26px,0px);
+    }
+
+    6%{
+        transform:translate(-512.13px,-212.13px);
+    }
+
+    9%{
+        transform:translate(-424.26px,-424.26px);
+    }
+
+    12%{
+        transform:translate(-212.13px,-512.13px);
+    }
+
+    15%{
+        transform:translate(0px,-424.26px);
+    }
+
+    18%{
+        transform:translate(87.87px,-212.13px);
+    }
+
+    21%{
+        transform:translate(0px,0px);
+    }
+
+    24% {
+        transform:translate(-212.13px,87.87px);
+    }
+
+    27%{
+        transform:translate(-424.26px,0px);
+    }
+
+    30%{
+        transform:translate(-512.13px,-212.13px);
+    }
+
+    33%{
+        transform:translate(-424.26px,-424.26px);
+    }
+
+    36%{
+        transform:translate(-212.13px,-512.13px);
+    }
+
+    39%{
+        transform:translate(0px,-424.26px);
+    }
+
+    42%{
+        transform:translate(87.87px,-212.13px);
+    }
+
+    45%{
+        transform:translate(0px,0px);
+    }
+
+    47% {
+        transform:translate(-212.13px,87.87px);
+    }
+
+    49%{
+        transform:translate(-424.26px,0px);
+    }
+
+    51%{
+        transform:translate(-512.13px,-212.13px);
+    }
+
+    53%{
+        transform:translate(-424.26px,-424.26px);
+    }
+
+    55%{
+        transform:translate(-212.13px,-512.13px);
+    }
+
+    57%{
+        transform:translate(0px,-424.26px);
+    }
+
+    59%{
+        transform:translate(87.87px,-212.13px);
+    }
+
+    61%{
+        transform:translate(0px,0px);
+        background-color:  rgb(0, 113, 128);
+    }
+
+    70%{
+        transform:translate(-212.13px,-212.13px);
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    77%{
+        transform:translate(-212.13px,-212.13px) rotate(180deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    84%{
+        transform:translate(-212.13px,-212.13px) rotate(720deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    91%{
+        transform:translate(-212.13px,-212.13px) rotate(2080deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    to{
+        transform:translate(900px,900px);
+        background-color: white;
+        border-radius: 0px;
+    }
+}
+
+@keyframes anim5 {
+    from {
+        transform:translate(-212.13px,-87.87px);
+    }
+
+    3%{
+        transform:translate(-300px,-300px);
+    }
+
+    6%{
+        transform:translate(-212.13px,-512.13px);
+    }
+
+    9%{
+        transform:translate(0px,-600px);
+    }
+
+    12%{
+        transform:translate(212.13px,-512.13px);
+    }
+
+    15%{
+        transform:translate(300px,-300px);
+    }
+
+    18%{
+        transform:translate(212.13px,-87.87px);
+    }
+
+    21%{
+        transform:translate(0px,0px);
+    }
+
+    24% {
+        transform:translate(-212.13px,-87.87px);
+    }
+
+    27%{
+        transform:translate(-300px,-300px);
+    }
+
+    30%{
+        transform:translate(-212.13px,-512.13px);
+    }
+
+    33%{
+        transform:translate(0px,-600px);
+    }
+
+    36%{
+        transform:translate(212.13px,-512.13px);
+    }
+
+    39%{
+        transform:translate(300px,-300px);
+    }
+
+    42%{
+        transform:translate(212.13px,-87.87px);
+    }
+
+    45%{
+        transform:translate(0px,0px);
+    }
+
+    47% {
+        transform:translate(-212.13px,-87.87px);
+    }
+
+    49%{
+        transform:translate(-300px,-300px);
+    }
+
+    51%{
+        transform:translate(-212.13px,-512.13px);
+    }
+
+    53%{
+        transform:translate(0px,-600px);
+    }
+
+    55%{
+        transform:translate(212.13px,-512.13px);
+    }
+
+    57%{
+        transform:translate(300px,-300px);
+    }
+
+    59%{
+        transform:translate(212.13px,-87.87px);
+    }
+
+    61%{
+        transform:translate(0px,0px);
+        background-color: rgb(64, 224, 91);
+    }
+
+    70%{
+        transform:translate(0px,-300px);
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    77%{
+        transform:translate(0px,-300px) rotate(180deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    84%{
+        transform:translate(0px,-300px) rotate(720deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    91%{
+        transform:translate(0px,-300px) rotate(2080deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    to{
+        transform:translate(0px,900px);
+        background-color: white;
+        border-radius: 0px;
+    }
+}
+
+
+@keyframes anim6 {
+    from {
+        transform:translate(-87.87px,-212.13px);
+    }
+
+    3%{
+        transform:translate(0px,-424.26px);
+    }
+
+    6%{
+        transform:translate(212.13px,-512.13px);
+    }
+
+    9%{
+        transform:translate(426.26px,-424.26px);
+    }
+
+    12%{
+        transform:translate(512.13px,-212.23px);
+    }
+
+    15%{
+        transform:translate(426.26px,0px);
+    }
+
+    18%{
+        transform:translate(212.13px,87.87px);
+    }
+
+    21%{
+        transform:translate(0px,0px);
+    }
+
+    24% {
+        transform:translate(-87.87px,-212.13px);
+    }
+
+    27%{
+        transform:translate(0px,-424.26px);
+    }
+
+    30%{
+        transform:translate(212.13px,-512.13px);
+    }
+
+    33%{
+        transform:translate(426.26px,-424.26px);
+    }
+
+    36%{
+        transform:translate(512.13px,-212.23px);
+    }
+
+    39%{
+        transform:translate(426.26px,0px);
+    }
+
+    42%{
+        transform:translate(212.13px,87.87px);
+    }
+
+    45%{
+        transform:translate(0px,0px);
+    }
+
+    47% {
+        transform:translate(-87.87px,-212.13px);
+    }
+
+    49%{
+        transform:translate(0px,-424.26px);
+    }
+
+    51%{
+        transform:translate(212.13px,-512.13px);
+    }
+
+    53%{
+        transform:translate(426.26px,-424.26px);
+    }
+
+    55%{
+        transform:translate(512.13px,-212.23px);
+    }
+
+    57%{
+        transform:translate(426.26px,0px);
+    }
+
+    59%{
+        transform:translate(212.13px,87.87px);
+    }
+
+    61%{
+        transform:translate(0px,0px);
+        background-color: rgb(141, 224, 64);
+    }
+
+    70%{
+        transform:translate(212.13px,-212.13px);
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    77%{
+        transform:translate(212.13px,-212.13px) rotate(180deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    84%{
+        transform:translate(212.13px,-212.13px) rotate(720deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    91%{
+        transform:translate(212.13px,-212.13px) rotate(2080deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    to{
+        transform:translate(-900px,900px);
+        background-color: white;
+        border-radius: 0px;
+    }
+}
+
+@keyframes anim7 {
+    from {
+        transform:translate(87.873px,-212.13px);
+    }
+
+    3%{
+        transform:translate(300px,-300px);
+    }
+
+    6%{
+        transform:translate(512.13px,-212.13px);
+    }
+
+    9%{
+        transform:translate(600px,0px);
+    }
+
+    12%{
+        transform:translate(512.13px,212.13px);
+    }
+
+    15%{
+        transform:translate(300px,300px);
+    }
+
+    18%{
+        transform:translate(87.87px,212.13px);
+    }
+
+    21%{
+        transform:translate(0px,0px);
+    }
+
+    24% {
+        transform:translate(87.87px,-212.13px);
+    }
+
+    27%{
+        transform:translate(300px,-300px);
+    }
+
+    30%{
+        transform:translate(512.13px,-212.13px);
+    }
+
+    33%{
+        transform:translate(600px,0px);
+    }
+
+    36%{
+        transform:translate(512.13px,212.13px);
+    }
+
+    39%{
+        transform:translate(300px,300px);
+    }
+
+    42%{
+        transform:translate(87.87px,212.13px);
+    }
+
+    45%{
+        transform:translate(0px,0px);
+    }
+
+    47% {
+        transform:translate(87.87px,-212.13px);
+    }
+
+    49%{
+        transform:translate(300px,-300px);
+    }
+
+    51%{
+        transform:translate(512.13px,-212.13px);
+    }
+
+    53%{
+        transform:translate(600px,0px);
+    }
+
+    55%{
+        transform:translate(512.13px,212.13px);
+    }
+
+    57%{
+        transform:translate(300px,300px);
+    }
+
+    59%{
+        transform:translate(87.87px,212.13px);
+    }
+
+    61%{
+        transform:translate(0px,0px);
+        background-color: yellow;
+    }
+ 
+
+
+    70%{
+        transform:translate(300px,0px);
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    77%{
+        transform:translate(300px,0px) rotate(180deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    84%{
+        transform:translate(300px,0px) rotate(720deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    91%{
+        transform:translate(300px,0px) rotate(2080deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    to{
+        transform:translate(-900px,0px);
+        background-color: white;
+        border-radius: 0px;
+    }
+}
+@keyframes anim8 {
+    from {
+        transform:translate(212.13px,-87.87px);
+    }
+
+    3%{
+        transform:translate(424.26px,0px);
+    }
+
+    6%{
+        transform:translate(512.13px,212.13px);
+    }
+
+    9%{
+        transform:translate(424.26px,424.26px);
+    }
+
+    12%{
+        transform:translate(212.13px,512.13px);
+    }
+
+    15%{
+        transform:translate(0px,424.26px);
+    }
+
+    18%{
+        transform:translate(-87.87px,212.13px);
+    }
+
+    21%{
+        transform:translate(0px,0px);
+    }
+
+    24%{
+        transform:translate(212.13px,-87.87px);
+    }
+
+    27%{
+        transform:translate(424.26px,0px);
+    }
+
+    30%{
+        transform:translate(512.13px,212.13px);
+    }
+
+    33%{
+        transform:translate(424.26px,424.26px);
+    }
+
+    36%{
+        transform:translate(212.13px,512.13px);
+    }
+
+    39%{
+        transform:translate(0px,424.26px);
+    }
+
+    42%{
+        transform:translate(-87.87px,212.13px);
+    }
+
+    45%{
+        transform:translate(0px,0px);
+    }
+
+    47% {
+        transform:translate(212.13px,-87.87px);
+    }
+
+    49%{
+        transform:translate(424.26px,0px);
+    }
+
+    51%{
+        transform:translate(512.13px,212.13px);
+    }
+
+    53%{
+        transform:translate(424.26px,424.26px);
+    }
+
+    55%{
+        transform:translate(212.13px,512.13px);
+    }
+
+    57%{
+        transform:translate(0px,424.26px);
+    }
+
+    59%{
+        transform:translate(-87.87px,212.13px);
+    }
+
+    61%{
+        transform:translate(0px,0px);
+        background-color: red;
+    }
+
+    70%{
+        transform:translate(212.13px,212.13px);
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    77%{
+        transform:translate(212.13px,212.13px) rotate(180deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    84%{
+        transform:translate(212.13px,212.13px) rotate(720deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    91%{
+        transform:translate(212.13px,212.13px) rotate(2080deg);
+        border-radius: 0px;
+        background-color: white;
+    }
+
+    to{
+        transform:translate(-900px,-900px);
+        background-color: white;
+        border-radius: 0px;
+    }
+}

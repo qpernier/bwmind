@@ -5,6 +5,9 @@ class IA(models.Model):
     name = models.CharField(max_length=200,unique = True)
     code = models.CharField(max_length=30,unique = True)
 
+    def __str__(self):
+        return '%s %s' % (self.name, self.code)
+
 class Stats(models.Model):
     fk_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     fk_ia = models.ForeignKey(IA, on_delete=models.CASCADE, blank=True, null=True)
@@ -22,6 +25,9 @@ class Game(models.Model):
 class PawnsType(models.Model):
     name = models.CharField(max_length=50, unique=True)
     code = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return '%s %s' % (self.name, self.code)
 
 class Pawns(models.Model):
     OWNER_CHOICES = [("player1", "player1"), ("player2", "player2")]

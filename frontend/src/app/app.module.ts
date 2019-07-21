@@ -6,17 +6,26 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import {ButtonModule} from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import { FormsModule } from '@angular/forms';
+import { GameComponent } from './game/game.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     ButtonModule,
-    DialogModule
+    DialogModule,
+    HttpClientModule,
+    RadioButtonModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

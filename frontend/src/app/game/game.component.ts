@@ -13,11 +13,11 @@ export class GameComponent implements OnInit {
   board: string[][] = [];
 
   constructor(private route: ActivatedRoute) {
-    this.buiildBoard();
+    this.buildBoard();
 
   }
 
-  buiildBoard(){
+  buildBoard(){
     for (let i = 0; i < 8; i++) {
       let ligne: string[] = [];
       for (let y = 0; y < 8; y++) {

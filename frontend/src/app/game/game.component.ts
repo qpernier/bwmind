@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Square } from '../models/square';
 
 @Component({
   selector: 'app-game',
@@ -8,34 +9,50 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class GameComponent implements OnInit {
 
+  /** Code of the playing IA */
   iaCode: string = null;
 
-  board: string[][] = [];
+  /** Represent the borad
+   *  7:0 * * * * * * 7:7
+   *   *  * * * * * *  *
+   *   *  * * * * * *  *
+   *   *  * * * * * *  *
+   *   *  * * * * * *  *
+   *   *  * * * * * *  *
+   *   *  * * * * * *  *
+   *  0:0 * * * * * * 0:7
+   */
+  board: Square[] = [];
+
+  /**Square size in px   */
+  squareSize = 100;
 
   constructor(private route: ActivatedRoute) {
     this.buildBoard();
 
   }
 
+  /**Build the board */
   buildBoard(){
     for (let i = 0; i < 8; i++) {
-      let ligne: string[] = [];
       for (let y = 0; y < 8; y++) {
+        // 7-1 to convert vertical coord to top
+        let vertical_coord = (7-i)*this.squareSize;
+        let horizontal_coord = y*this.squareSize;
         if(i % 2 == 0){
           if (y % 2 == 0) {
-            ligne.push('black');
+            this.board.push(new Square('black', vertical_coord, horizontal_coord));
           } else {
-            ligne.push('white');
+            this.board.push(new Square('white', vertical_coord, horizontal_coord));
           }
         }else{
           if (y % 2 == 0) {
-            ligne.push('white');
+            this.board.push(new Square('white', vertical_coord, horizontal_coord));
           } else {
-            ligne.push('black');
+            this.board.push(new Square('black', vertical_coord, horizontal_coord));
           }
         }
       }
-      this.board.push(ligne);
     }
     console.log(this.board);
   }

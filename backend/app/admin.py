@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import IA, Stats, PawnsType, Pawns, Game
+from .models import IA, Stat, PawnsType, Pawn, Game
 
 admin.site.register(IA)
-admin.site.register(Stats)
+admin.site.register(Stat)
 admin.site.register(PawnsType)
-admin.site.register(Pawns)
+admin.site.register(Pawn)
 admin.site.register(Game)

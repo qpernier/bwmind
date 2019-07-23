@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Square } from '../models/square';
+import { GameService } from './game.service';
+import { Pawn } from '../models/pawn';
 
 @Component({
   selector: 'app-game',
@@ -24,16 +26,28 @@ export class GameComponent implements OnInit {
    */
   board: Square[] = [];
 
+  /** Alive pawns */
+  pawns:Pawn[];
+
   /**Square size in px   */
   squareSize = 100;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private gameService: GameService) {
     this.buildBoard();
+  }
 
+  ngOnInit() {
+    this.iaCode = this.route.snapshot.paramMap.get('iaCode');
+    this.gameService.newGame(this.iaCode).subscribe(
+      res => {
+          this.pawns = res;
+          console.log(this.pawns);
+        });
+    
   }
 
   /**Build the board */
-  buildBoard(){
+  private buildBoard(){
     for (let i = 0; i < 8; i++) {
       for (let y = 0; y < 8; y++) {
         // 7-1 to convert vertical coord to top
@@ -57,8 +71,6 @@ export class GameComponent implements OnInit {
     console.log(this.board);
   }
 
-  ngOnInit() {
-    this.iaCode = this.route.snapshot.paramMap.get('iaCode');
-  }
+
 
 }

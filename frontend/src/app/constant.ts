@@ -3,3 +3,10 @@ export class Urls{
     public static ias: string = Urls.baseUrl + 'ias';
     public static newGame: string = Urls.baseUrl + 'newgame?iaCode=';
 }
+
+export class Constant{
+    /**Square size in px */
+    public static squareSize:number = 100;
+    /**Pawn size in px */
+    public static pawnSize:number = 65;
+}

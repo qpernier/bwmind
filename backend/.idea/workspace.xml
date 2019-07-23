@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e355e784-9dd0-4a1a-ac7e-595f034ab1f3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/board/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/board/board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/constant.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/constant.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/game/game.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/game/game.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/app/game/game.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/game/game.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/game/game.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/game/game.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/models/pawn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/models/pawn.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +30,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="178">
@@ -48,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/board/board.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="32" column="66" selection-start-line="32" selection-start-column="66" selection-end-line="32" selection-end-column="66" />
+            <state relative-caret-position="357">
+              <caret line="21" column="98" lean-forward="true" selection-start-line="21" selection-start-column="98" selection-end-line="21" selection-end-column="98" />
             </state>
           </provider>
         </entry>
@@ -111,14 +117,14 @@
         <option value="$PROJECT_DIR$/app/migrations/0002_auto_20190720_2252.py" />
         <option value="$PROJECT_DIR$/bwmind/urls.py" />
         <option value="$PROJECT_DIR$/app/urls.py" />
-        <option value="$PROJECT_DIR$/app/board/board.py" />
         <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/admin.py" />
         <option value="$PROJECT_DIR$/app/views.py" />
+        <option value="$PROJECT_DIR$/app/board/board.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="260" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -203,7 +209,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
@@ -303,13 +309,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/board/board.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="66" selection-start-line="32" selection-start-column="66" selection-end-line="32" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/migrations/0001_initial.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="518">
@@ -324,6 +323,13 @@
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/board/board.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="98" lean-forward="true" selection-start-line="21" selection-start-column="98" selection-end-line="21" selection-end-column="98" />
         </state>
       </provider>
     </entry>

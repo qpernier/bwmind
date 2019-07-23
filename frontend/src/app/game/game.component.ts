@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Square } from '../models/square';
 import { GameService } from './game.service';
 import { Pawn } from '../models/pawn';
+import { Urls, Constant } from '../constant';
 
 @Component({
   selector: 'app-game',
@@ -29,8 +30,11 @@ export class GameComponent implements OnInit {
   /** Alive pawns */
   pawns:Pawn[];
 
-  /**Square size in px   */
-  squareSize = 100;
+  /**Square size in px */
+  squareSize = Constant.squareSize;
+
+  /**Pawn size in px */
+  pawnSize = Constant.pawnSize;
 
   constructor(private route: ActivatedRoute, private gameService: GameService) {
     this.buildBoard();
@@ -68,7 +72,6 @@ export class GameComponent implements OnInit {
         }
       }
     }
-    console.log(this.board);
   }
 
 

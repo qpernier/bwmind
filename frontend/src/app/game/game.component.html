@@ -1,10 +1,15 @@
 <div class="container">
         <div class="wrapper">
-            <div *ngFor="let square of board" [ngStyle]="{  'height': squareSize + 'px',
+                <div *ngFor="let square of board" [ngStyle]="{  'height': squareSize + 'px',
                                                             'width': squareSize + 'px', 
                                                             'backgroundColor' : square.color , 
                                                             'top' : square.verticalCoord + 'px', 
                                                             'left' : square.horizontalCoord + 'px',
                                                             'position': 'absolute'}" ></div>
+                <img *ngFor="let pawn of pawns" [src]="pawn.img" [ngStyle]="{  'height': pawnSize + 'px',
+                                                            'width': pawnSize + 'px', 
+                                                            'top' : pawn.top, 
+                                                            'left' : pawn.left,
+                                                            'position': 'absolute'}" >
         </div>
 </div>

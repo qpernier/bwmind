@@ -3,10 +3,10 @@
                 <div *ngFor="let square of board" [ngStyle]="{  'height': squareSize + 'px',
                                                             'width': squareSize + 'px', 
                                                             'backgroundColor' : square.color , 
-                                                            'top' : square.verticalCoord + 'px', 
-                                                            'left' : square.horizontalCoord + 'px',
+                                                            'top' : square.top, 
+                                                            'left' : square.left,
                                                             'position': 'absolute'}" ></div>
-                <img *ngFor="let pawn of pawns" [src]="pawn.img" [ngStyle]="{  'height': pawnSize + 'px',
+                <img *ngFor="let pawn of pawns" (click)="onPawnClick(pawn)" [src]="pawn.img" [ngStyle]="{  'height': pawnSize + 'px',
                                                             'width': pawnSize + 'px', 
                                                             'top' : pawn.top, 
                                                             'left' : pawn.left,

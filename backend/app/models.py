@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db import connection
+
 
 class IA(models.Model):
     name = models.CharField(max_length=200,unique = True)
@@ -37,4 +39,19 @@ class Pawn(models.Model):
     vertical_coord = models.IntegerField()
     horizontal_coord = models.IntegerField()
     deadly_stroke = models.IntegerField(blank=True, null=True)
+
+    def get_pawns(self, game):
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT * FROM app_pawn as p JOIN app_pawnstype as pt ON pt.id = p.fk_pawns_type_id WHERE p.fk_game_id = %s and p.deadly_stroke IS NULL",
+                [game.id])
+            return self.dictfetchall(cursor)
+
+    def dictfetchall(self, cursor):
+        "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
 

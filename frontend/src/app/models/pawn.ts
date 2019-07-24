@@ -1,13 +1,26 @@
 import { Constant } from '../constant';
+import { Coord } from './coord';
 
 export class Pawn{
     public top:string;
     public left:string;
-    public img: string = 'assets/pawn/black_king.png';
+    public img: string;
 
-    constructor(public id:number,public owner:string, public fk_game_id: number, public code: string, public vertical_coord: number, public horizontal_coord:number){
+    constructor(public id:number,
+                public owner:string,
+                public fk_game_id: number, 
+                public code: string, 
+                public vertical_coord: number, 
+                public horizontal_coord:number, 
+                public allowedMove: Coord[]){
+
         this.top = (((7 - this.vertical_coord) * Constant.squareSize) + 20) + 'px';
         this.left = ((this.horizontal_coord * Constant.squareSize) + 20) + 'px';
+        this.getImgPath(owner,code);
+        
+    }
+
+    getImgPath(owner,code){
         if (owner === "player1" && code === "king") {
             this.img = 'assets/pawn/white_king.png';
         } else if (owner === "player1" && code === "queen") {

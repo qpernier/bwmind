@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .models import IA,Game, Pawn, PawnsType
 from .board.board import Board
 from django.http import HttpResponse
-from django.db import connection
 from django.core import serializers
 import json
 
@@ -31,19 +30,12 @@ def new_game(request):
                      horizontal_coord=pawn["horizontal_coord"])
         pawn.save()
 
-    res = []
+    pawn_class = Pawn()
 
-    with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM app_pawn as p JOIN app_pawnstype as pt ON pt.id = p.fk_pawns_type_id WHERE p.fk_game_id = %s ", [game.id])
-        res = dictfetchall(cursor)
+    pawn_queryset = pawn_class.get_pawns(game)
 
-    return HttpResponse(json.dumps( res ))
-
-def dictfetchall(cursor):
-    "Return all rows from a cursor as a dict"
-    columns = [col[0] for col in cursor.description]
-    return [
-        dict(zip(columns, row))
-        for row in cursor.fetchall()
-    ]
+    board.buildBoard(game)
+    for pawn_dict in pawn_queryset:
+        pawn_dict["allowed_move"] = board.allowed_move(pawn_dict["code"], pawn_dict["owner"], pawn_dict["vertical_coord"], pawn_dict["horizontal_coord"])
+    return HttpResponse(json.dumps(pawn_queryset))
 

@@ -41,16 +41,20 @@ export class GameComponent implements OnInit {
   /**Pawn size in px */
   pawnSize = Constant.pawnSize;
 
+  /**True if spinner should be displayed */
+  displaySpinner:boolean = false;
+
   constructor(private route: ActivatedRoute, private gameService: GameService) {
     this.buildBoard();
   }
 
   ngOnInit() {
+    this.displaySpinner = true;
     this.iaCode = this.route.snapshot.paramMap.get('iaCode');
     this.gameService.newGame(this.iaCode).subscribe(
       res => {
           this.pawns = res;
-          console.log(this.pawns);
+          this.displaySpinner = false;
         });
     
   }

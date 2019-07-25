@@ -6,3 +6,4 @@ backend/app/migrations/__pycache__/
 *.sqlite3
 *.sqlite3-journal
 *lock.json
+backend/.idea/workspace.xml

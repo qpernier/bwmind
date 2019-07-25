@@ -46,7 +46,7 @@ class Board():
     def allowed_move(self, pawn_type, owner, vertical_coord, horizontal_coord):
         pawn = Pawn(owner,pawn_type)
         if pawn.owner == "player1" and pawn.pawn_type == "pawn":
-            return self._allowed_move_pawn_player1(pawn, vertical_coord, horizontal_coord)
+            return self._allowed_move_pawn_player1( vertical_coord, horizontal_coord)
 
 
     def buildBoard(self, game):
@@ -54,25 +54,31 @@ class Board():
         for pawn_dict in pawn_class.get_pawns(game):
             self.board[pawn_dict["vertical_coord"]][pawn_dict["horizontal_coord"]] = Pawn(pawn_dict["owner"],
                                                                                           pawn_dict["code"])
-    def _allowed_move_pawn_player1(self, pawn, vertical_coord, horizontal_coord):
+    def _allowed_move_pawn_player1(self, vertical_coord, horizontal_coord):
         print("test")
         allowed_move = []
         if vertical_coord == 7:
-            print("test1")
             return []
-        if horizontal_coord not in self.board[vertical_coord+1].keys():
-            print("test2")
+        if self._is_empty(horizontal_coord, vertical_coord+1):
             allowed_move.append(Coord(vertical_coord+1, horizontal_coord).to_dict())
 
-        if horizontal_coord-1 in self.board[vertical_coord+1].keys() and self.board[vertical_coord+1][horizontal_coord-1] == "player2":
+        if not self._is_empty(horizontal_coord - 1, vertical_coord+1) and self.board[vertical_coord+1][horizontal_coord-1]["owner"] == "player2":
             print("test3")
             allowed_move.append(Coord(vertical_coord + 1, horizontal_coord-1).to_dict())
 
-        if horizontal_coord+1 in self.board[vertical_coord+1].keys() and self.board[vertical_coord+1][horizontal_coord+1] == "player2":
-            print("test4")
+        if not self._is_empty(horizontal_coord + 1, vertical_coord+1) and self.board[vertical_coord+1][horizontal_coord+1]["owner"] == "player2":
             allowed_move.append(Coord(vertical_coord + 1, horizontal_coord+1).to_dict())
 
+        if self._is_empty(horizontal_coord, vertical_coord+1) and self._is_empty(horizontal_coord, vertical_coord+2) and vertical_coord == 1:
+            allowed_move.append(Coord(vertical_coord+2, horizontal_coord).to_dict())
+
         return allowed_move
+
+    """
+    Rturn True if square is empty
+    """
+    def _is_empty(self, horizontal_coord, vertical_coord):
+        return horizontal_coord not in self.board[vertical_coord].keys()
 
 
 

@@ -3,6 +3,9 @@ class Pawn():
         self.owner = owner
         self.pawn_type = pawn_type
 
+    def __str__(self):
+        return "owner : " + self.owner + " type : " + self.pawn_type
+
     def get_owner(self):
         return self.owner
 

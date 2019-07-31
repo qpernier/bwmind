@@ -77,14 +77,13 @@ class Board():
             return self._allowed_move_pawn_player1(vertical_coord, horizontal_coord)
 
     def buildBoard(self, game, pawn_queryset=None):
+        self.board = {0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}
         if pawn_queryset is None:
             pawn_class = Pawn_model()
             pawn_queryset = pawn_class.get_pawns(game)
         for pawn_dict in pawn_queryset:
             self.board[pawn_dict["vertical_coord"]][pawn_dict["horizontal_coord"]] = Pawn(pawn_dict["owner"],
                                                                                           pawn_dict["code"])
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(self.board)
 
     def _allowed_move_pawn_player1(self, vertical_coord, horizontal_coord):
         pp = pprint.PrettyPrinter(indent=4)

@@ -1,5 +1,8 @@
 from django.shortcuts import render
-from .models import IA,Game, Pawn, PawnsType
+from django.views.decorators.csrf import csrf_exempt
+
+from app.board.coord import Coord
+from .models import IA, Game, Pawn, PawnsType
 from .board.board import Board
 from django.http import HttpResponse
 from django.core import serializers
@@ -19,7 +22,6 @@ def new_game(request):
     ia = IA.objects.get(code=request.GET.get('iaCode', ''))
     game = Game(fk_ia2=ia)
     game.save()
-
     board = Board()
     for pawn in board.initialPosition():
         pawns_type = PawnsType.objects.get(code=pawn["pawns_type"])
@@ -29,13 +31,37 @@ def new_game(request):
                      vertical_coord=pawn["vertical_coord"],
                      horizontal_coord=pawn["horizontal_coord"])
         pawn.save()
+    return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game)))
 
-    pawn_class = Pawn()
+"""
+Move pawn from player 1 then play for player 2
+"""
+@csrf_exempt
+def play(request):
+    if request.method == 'POST':
+        params = json.loads(request.body.decode('utf-8'))
+        moved_pawn = Pawn.objects.get(id=params["pawn_id"])
+        game = Game.objects.get(id=params["game_id"])
+        destination = Coord(params["vertical_coord"], params["horizontal_coord"])
+        #check move allowed
+        board = Board()
+        board.buildBoard(game)
+        if board.is_move_allowed(moved_pawn, destination):
+            game.strokes_number = game.strokes_number + 1
+            game.save()
+            #kill pawn if needed
+            to_kill = Pawn.objects.filter(vertical_coord=destination.vertical_coord, horizontal_coord=destination.horizontal_coord)
+            for killed_pawn in to_kill:
+                killed_pawn.deadly_stroke = game.strokes_number
+                killed_pawn.save()
+            #move pawn
+            moved_pawn.vertical_coord = destination.vertical_coord
+            moved_pawn.horizontal_coord = destination.horizontal_coord
+            moved_pawn.save()
+            #move player 2 pawn with ia
+            #TODO
 
-    pawn_queryset = pawn_class.get_pawns(game)
-
-    board.buildBoard(game)
-    for pawn_dict in pawn_queryset:
-        pawn_dict["allowed_move"] = board.allowed_move(pawn_dict["code"], pawn_dict["owner"], pawn_dict["vertical_coord"], pawn_dict["horizontal_coord"])
-    return HttpResponse(json.dumps(pawn_queryset))
+        return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game)))
+    elif request.method == 'OPTIONS':
+        return HttpResponse("ok")
 

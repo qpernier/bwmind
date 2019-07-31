@@ -1,6 +1,6 @@
 <div class="container">
         <div class="wrapper">
-                <div *ngFor="let square of board" [ngStyle]="{  'height': squareSize + 'px',
+                <div *ngFor="let square of board" (click)="onSquareClick(square)" [ngStyle]="{  'height': squareSize + 'px',
                                                             'width': squareSize + 'px', 
                                                             'backgroundColor' : square.color , 
                                                             'top' : square.top, 

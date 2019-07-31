@@ -41,11 +41,13 @@ class Pawn(models.Model):
     deadly_stroke = models.IntegerField(blank=True, null=True)
 
     def get_pawns(self, game):
+        print(game.id)
         with connection.cursor() as cursor:
             cursor.execute(
-                "SELECT * FROM app_pawn as p JOIN app_pawnstype as pt ON pt.id = p.fk_pawns_type_id WHERE p.fk_game_id = %s and p.deadly_stroke IS NULL",
+                "SELECT p.id, owner, vertical_coord, horizontal_coord, deadly_stroke, fk_game_id, fk_pawns_type_id, name,code FROM app_pawn as p JOIN app_pawnstype as pt ON pt.id = p.fk_pawns_type_id WHERE p.fk_game_id = %s and p.deadly_stroke IS NULL",
                 [game.id])
             return self.dictfetchall(cursor)
+
 
     def dictfetchall(self, cursor):
         "Return all rows from a cursor as a dict"

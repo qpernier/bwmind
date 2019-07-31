@@ -13,6 +13,8 @@ import _ from "lodash";
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
+  /**Id of the current game */
+  gameId: number = null;
 
   /** Code of the playing IA */
   iaCode: string = null;
@@ -52,7 +54,8 @@ export class GameComponent implements OnInit {
     this.displaySpinner = true;
     this.iaCode = this.route.snapshot.paramMap.get('iaCode');
     this.gameService.newGame(this.iaCode).subscribe(
-      res => {
+      (res:Pawn[]) => {
+          this.gameId = res[0].fk_game_id;
           this.pawns = res;
           this.displaySpinner = false;
         });
@@ -62,10 +65,18 @@ export class GameComponent implements OnInit {
   /**Square click handler */
   onSquareClick(square:Square){
     if(square.allowed){
+      this.displaySpinner = true;
       this.resetColor();
-      //TODO ajouter (click) html
-      // deplacer pion sur cette case.
-      //todo service qui deplace le pion en bdd et appelle l'ia
+      let pawnToMove = this.findPawnById(this.selectedPawn.id);
+      pawnToMove.horizontal_coord = square.horizontalCoord;
+      pawnToMove.vertical_coord = square.verticalCoord;
+      this.pawns = _.cloneDeep(this.pawns);
+      this.gameService.play(this.gameId, this.selectedPawn, square).subscribe( 
+        (res:Pawn[]) => {
+          this.pawns = res;
+          this.pawns = _.cloneDeep(this.pawns)
+          this.displaySpinner = false;
+        });
     }
 
   }
@@ -77,13 +88,19 @@ export class GameComponent implements OnInit {
       this.resetColor();
       this.highlight(new Coord(pawn.vertical_coord, pawn.horizontal_coord));
       this.highlightAllowedCoords(pawn.allowedMove);
+    }else if(pawn.owner == 'player2' && this.selectedPawn != undefined && this.selectedPawn != null){
+      let destination = new Coord(pawn.vertical_coord, pawn.horizontal_coord);
+      this.onSquareClick(this.findSquareByCoord(destination));
     }
   }
 
-  /**Back to origin color */
+  /**
+   * Back to origin color and clear allowed squares
+   */
   private resetColor(){
     for(let square of this.board){
       square.color = square.originColor;
+      square.allowed = false;
     }
     this.board = _.cloneDeep(this.board);
   }
@@ -105,6 +122,23 @@ export class GameComponent implements OnInit {
     this.board = _.cloneDeep(this.board);
   }
 
+  /**Update pawn list with pawn moved from backend */
+  private updatePawnList(movedPawn:Pawn){
+    let pawn = this.findPawnById(movedPawn.id);
+    pawn.horizontal_coord = movedPawn.horizontal_coord;
+    pawn.vertical_coord = movedPawn.vertical_coord;
+    this.board = _.cloneDeep(this.board);
+  }
+
+
+  /**Find a pawn by id */
+  private findPawnById(id:number){
+    for(let pawn of this.pawns){
+      if(pawn.id === id){
+        return pawn;
+      }
+    }
+  }
   /**Find a squar by coordinate */
   private findSquareByCoord(coord:Coord){
     for(let square of this.board){

@@ -20,5 +20,6 @@ from app import views
 urlpatterns = [
     path('ias', views.ias, name='ias'),
     path('newgame', views.new_game, name='newGame'),
+    path('play', views.play, name='play'),
 ]
 

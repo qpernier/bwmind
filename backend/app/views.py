@@ -31,7 +31,7 @@ def new_game(request):
                      vertical_coord=pawn["vertical_coord"],
                      horizontal_coord=pawn["horizontal_coord"])
         pawn.save()
-    return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game)))
+    return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game,"player1")))
 
 """
 Move pawn from player 1 then play for player 2
@@ -61,7 +61,7 @@ def play(request):
             #move player 2 pawn with ia
             #TODO
 
-        return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game)))
+        return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game, "player1")))
     elif request.method == 'OPTIONS':
         return HttpResponse("ok")
 

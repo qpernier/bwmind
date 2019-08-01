@@ -54,18 +54,20 @@ class Board():
 
         self.buildBoard(game, pawn_queryset)
         for pawn_dict in pawn_queryset:
-            pawn_dict["allowed_move"] = self.allowed_move(pawn_dict["code"], pawn_dict["owner"],
-                                                        pawn_dict["vertical_coord"], pawn_dict["horizontal_coord"],player)
+            allowed_moves_dict = []
+            for allowed_move in self.allowed_move(pawn_dict["code"], pawn_dict["owner"],
+                                                  pawn_dict["vertical_coord"], pawn_dict["horizontal_coord"],player):
+                allowed_moves_dict.append(allowed_move.to_dict())
+            pawn_dict["allowed_move"] = allowed_moves_dict
         return pawn_queryset
 
     """
     Return True if the move is allowed
     """
-    def is_move_allowed(self, pawn, destination):
-        allowed_moves = self.allowed_move(pawn.fk_pawns_type.code, pawn.owner, pawn.vertical_coord, pawn.horizontal_coord)
+    def is_move_allowed(self, pawn, destination, player):
+        allowed_moves = self.allowed_move(pawn.fk_pawns_type.code, pawn.owner, pawn.vertical_coord, pawn.horizontal_coord, player)
         for allowed_move in allowed_moves:
-            allowed_move_coord = Coord(allowed_move["vertical_coord"], allowed_move["horizontal_coord"])
-            if allowed_move_coord == destination:
+            if allowed_move == destination:
                 return True
         return False
 
@@ -153,16 +155,16 @@ class Board():
         if vertical_coord == 7:
             return []
         if self._is_empty(horizontal_coord, vertical_coord+1, self.board) and not disable_no_attack_moves:
-            allowed_move.append(Coord(vertical_coord+1, horizontal_coord).to_dict())
+            allowed_move.append(Coord(vertical_coord+1, horizontal_coord))
 
         if not self._is_empty(horizontal_coord - 1, vertical_coord+1, self.board) and self.board[vertical_coord+1][horizontal_coord-1].owner == "player2":
-            allowed_move.append(Coord(vertical_coord + 1, horizontal_coord-1).to_dict())
+            allowed_move.append(Coord(vertical_coord + 1, horizontal_coord-1))
 
         if not self._is_empty(horizontal_coord + 1, vertical_coord+1, self.board) and self.board[vertical_coord+1][horizontal_coord+1].owner == "player2":
-            allowed_move.append(Coord(vertical_coord + 1, horizontal_coord+1).to_dict())
+            allowed_move.append(Coord(vertical_coord + 1, horizontal_coord+1))
 
         if self._is_empty(horizontal_coord, vertical_coord+1, self.board) and self._is_empty(horizontal_coord, vertical_coord+2, self.board) and vertical_coord == 1 and not disable_no_attack_moves:
-            allowed_move.append(Coord(vertical_coord+2, horizontal_coord).to_dict())
+            allowed_move.append(Coord(vertical_coord+2, horizontal_coord))
 
         return allowed_move
 
@@ -171,16 +173,16 @@ class Board():
         if vertical_coord == 0:
             return []
         if self._is_empty(horizontal_coord, vertical_coord-1, self.board)and not disable_no_attack_moves:
-            allowed_move.append(Coord(vertical_coord-1, horizontal_coord).to_dict())
+            allowed_move.append(Coord(vertical_coord-1, horizontal_coord))
 
         if not self._is_empty(horizontal_coord - 1, vertical_coord-1, self.board) and self.board[vertical_coord-1][horizontal_coord-1].owner == "player1":
-            allowed_move.append(Coord(vertical_coord - 1, horizontal_coord-1).to_dict())
+            allowed_move.append(Coord(vertical_coord - 1, horizontal_coord-1))
 
         if not self._is_empty(horizontal_coord + 1, vertical_coord-1, self.board) and self.board[vertical_coord-1][horizontal_coord+1].owner == "player1":
-            allowed_move.append(Coord(vertical_coord - 1, horizontal_coord+1).to_dict())
+            allowed_move.append(Coord(vertical_coord - 1, horizontal_coord+1))
 
         if self._is_empty(horizontal_coord, vertical_coord-1, self.board) and self._is_empty(horizontal_coord, vertical_coord-2, self.board) and vertical_coord == 6 and not disable_no_attack_moves:
-            allowed_move.append(Coord(vertical_coord-2, horizontal_coord).to_dict())
+            allowed_move.append(Coord(vertical_coord-2, horizontal_coord))
 
         return allowed_move
 
@@ -202,10 +204,19 @@ class Board():
 
     def _allowed_move_knight(self, vertical_coord, horizontal_coord, owner):
         allowed_move = []
-        new_coord = Coord(vertical_coord + 2, horizontal_coord + 1)
-        if self._is_in_board(new_coord) and not self._is_mine(new_coord, owner, self.board):
-            allowed_move.append(new_coord.to_dict())
+        new_coord_list = [Coord(vertical_coord + 2, horizontal_coord + 1),
+                          Coord(vertical_coord + 2, horizontal_coord - 1),
+                          Coord(vertical_coord + 1, horizontal_coord + 2),
+                          Coord(vertical_coord + 1, horizontal_coord - 2),
+                          Coord(vertical_coord - 1, horizontal_coord + 2),
+                          Coord(vertical_coord - 1, horizontal_coord - 2),
+                          Coord(vertical_coord - 2, horizontal_coord + 1),
+                          Coord(vertical_coord - 2, horizontal_coord - 1)]
+        for new_coord in new_coord_list:
+            if self._is_in_board(new_coord) and not self._is_mine(new_coord, owner, self.board):
+                allowed_move.append(new_coord)
         return allowed_move
+
 
     """
     Rturn True if square is empty

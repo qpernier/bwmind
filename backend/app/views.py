@@ -46,7 +46,7 @@ def play(request):
         #check move allowed
         board = Board()
         board.buildBoard(game)
-        if board.is_move_allowed(moved_pawn, destination):
+        if board.is_move_allowed(moved_pawn, destination, "player1"):
             game.strokes_number = game.strokes_number + 1
             game.save()
             #kill pawn if needed

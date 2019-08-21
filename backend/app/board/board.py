@@ -83,8 +83,8 @@ class Board():
         for pawn_dict in pawn_queryset:
             self.board[pawn_dict["vertical_coord"]][pawn_dict["horizontal_coord"]] = Pawn(pawn_dict["owner"],
                                                                                           pawn_dict["code"])
-        pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(self.board)
+#      pp = pprint.PrettyPrinter(indent=4)
+#       pp.pprint(self.board)
 
     """
     List all allowed move for a pawn
@@ -187,20 +187,165 @@ class Board():
         return allowed_move
 
     def _allowed_move_king(self, vertical_coord, horizontal_coord, owner):
-        return []
-        #TODO
+        allowed_move = []
+        new_coord_list = [Coord(vertical_coord , horizontal_coord + 1),
+                          Coord(vertical_coord , horizontal_coord - 1),
+                          Coord(vertical_coord + 1, horizontal_coord),
+                          Coord(vertical_coord - 1, horizontal_coord),
+                          Coord(vertical_coord - 1, horizontal_coord + 1),
+                          Coord(vertical_coord - 1, horizontal_coord - 1),
+                          Coord(vertical_coord + 1, horizontal_coord + 1),
+                          Coord(vertical_coord + 1, horizontal_coord - 1)]
+        for new_coord in new_coord_list:
+            if self._is_in_board(new_coord) and not self._is_mine(new_coord, owner, self.board):
+                allowed_move.append(new_coord)
+        return allowed_move
+
 
     def _allowed_move_queen(self, vertical_coord, horizontal_coord, owner):
-        return []
-        #TODO
+        allowed_move = []
+        allowed_move.extend(self._move_left_up(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_right_up(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_left_down(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_right_down(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_up(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_down(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_left(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_right(vertical_coord, horizontal_coord, owner, allowed_move))
+        return allowed_move
+
 
     def _allowed_move_bishop(self, vertical_coord, horizontal_coord, owner):
-        return []
-        #TODO
+        allowed_move = []
+        allowed_move.extend(self._move_left_up(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_right_up(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_left_down(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_right_down(vertical_coord, horizontal_coord, owner, allowed_move))
+        return allowed_move
+
+
+    """
+    Move left up a pawn recursively
+    """
+    def _move_left_up(self, vertical_coord, horizontal_coord, owner, allowed_move=[]):
+        coord = Coord(vertical_coord + 1, horizontal_coord - 1)
+        if not self._is_in_board(coord) or self._is_mine(coord, owner, self.board):
+            return allowed_move
+        elif self._is_enemy(coord, owner, self.board):
+            allowed_move.append(coord)
+            return allowed_move
+        else:
+            allowed_move.append(coord)
+            return self._move_left_up(vertical_coord + 1, horizontal_coord - 1, owner, allowed_move)
+
+
+    """
+    Move left down a pawn recursively
+    """
+    def _move_left_down(self, vertical_coord, horizontal_coord, owner, allowed_move=[]):
+        coord = Coord(vertical_coord - 1, horizontal_coord - 1)
+        if not self._is_in_board(coord) or self._is_mine(coord, owner, self.board):
+            return allowed_move
+        elif self._is_enemy(coord, owner, self.board):
+            allowed_move.append(coord)
+            return allowed_move
+        else:
+            allowed_move.append(coord)
+            return self._move_left_down(vertical_coord - 1, horizontal_coord - 1, owner, allowed_move)
+
+    """
+    Move right up a pawn recursively
+    """
+    def _move_right_up(self, vertical_coord, horizontal_coord, owner, allowed_move=[]):
+        coord = Coord(vertical_coord + 1, horizontal_coord + 1)
+        if not self._is_in_board(coord) or self._is_mine(coord, owner, self.board):
+            return allowed_move
+        elif self._is_enemy(coord, owner, self.board):
+            allowed_move.append(coord)
+            return allowed_move
+        else:
+            allowed_move.append(coord)
+            return self._move_right_up(vertical_coord + 1, horizontal_coord + 1, owner, allowed_move)
+
+    """
+     Move right down a pawn recursively
+     """
+    def _move_right_down(self, vertical_coord, horizontal_coord, owner, allowed_move=[]):
+        coord = Coord(vertical_coord - 1, horizontal_coord + 1)
+        if not self._is_in_board(coord) or self._is_mine(coord, owner, self.board):
+            return allowed_move
+        elif self._is_enemy(coord, owner, self.board):
+            allowed_move.append(coord)
+            return allowed_move
+        else:
+            allowed_move.append(coord)
+            return self._move_right_down(vertical_coord - 1, horizontal_coord + 1, owner, allowed_move)
 
     def _allowed_move_rook(self, vertical_coord, horizontal_coord, owner):
-        return []
-        #TODO
+        allowed_move = []
+        allowed_move.extend(self._move_up(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_down(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_left(vertical_coord, horizontal_coord, owner, allowed_move))
+        allowed_move.extend(self._move_right(vertical_coord, horizontal_coord, owner, allowed_move))
+        return allowed_move
+
+    """
+    Move up a pawn recursively
+    """
+    def _move_up(self, vertical_coord, horizontal_coord, owner, allowed_move=[]):
+        coord = Coord(vertical_coord + 1, horizontal_coord)
+        if not self._is_in_board(coord) or self._is_mine(coord, owner, self.board):
+            return allowed_move
+        elif self._is_enemy(coord, owner, self.board):
+            allowed_move.append(coord)
+            return allowed_move
+        else:
+            allowed_move.append(coord)
+            return self._move_up(vertical_coord + 1, horizontal_coord, owner, allowed_move)
+
+
+    """
+    Move down a pawn recursively
+    """
+    def _move_down(self, vertical_coord, horizontal_coord, owner, allowed_move=[]):
+        coord = Coord(vertical_coord - 1, horizontal_coord)
+        if not self._is_in_board(coord) or self._is_mine(coord, owner, self.board):
+            return allowed_move
+        elif self._is_enemy(coord, owner, self.board):
+            allowed_move.append(coord)
+            return allowed_move
+        else:
+            allowed_move.append(coord)
+            return self._move_down(vertical_coord - 1, horizontal_coord, owner, allowed_move)
+
+    """
+    Move right a pawn recursively
+    """
+    def _move_right(self, vertical_coord, horizontal_coord, owner, allowed_move=[]):
+        coord = Coord(vertical_coord, horizontal_coord + 1)
+        if not self._is_in_board(coord) or self._is_mine(coord, owner, self.board):
+            return allowed_move
+        elif self._is_enemy(coord, owner, self.board):
+            allowed_move.append(coord)
+            return allowed_move
+        else:
+            allowed_move.append(coord)
+            return self._move_right(vertical_coord, horizontal_coord + 1, owner, allowed_move)
+
+    """
+     Move left a pawn recursively
+     """
+    def _move_left(self, vertical_coord, horizontal_coord, owner, allowed_move=[]):
+        coord = Coord(vertical_coord, horizontal_coord - 1)
+        if not self._is_in_board(coord) or self._is_mine(coord, owner, self.board):
+            return allowed_move
+        elif self._is_enemy(coord, owner, self.board):
+            allowed_move.append(coord)
+            return allowed_move
+        else:
+            allowed_move.append(coord)
+            return self._move_left(vertical_coord, horizontal_coord - 1, owner, allowed_move)
+
 
     def _allowed_move_knight(self, vertical_coord, horizontal_coord, owner):
         allowed_move = []

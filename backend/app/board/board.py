@@ -5,8 +5,7 @@ import pprint
 import copy
 
 
-
-class Board():
+class Board:
     board = { 0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {} }
 
     def initialPosition(self):
@@ -48,7 +47,7 @@ class Board():
     """
     Get pawns and allowed moves for a game
     """
-    def get_pawns_and_allowed_moves(self,game, player):
+    def get_pawns_and_allowed_moves(self, game, player):
         pawn_model = Pawn_model()
         pawn_queryset = pawn_model.get_pawns(game)
 
@@ -56,7 +55,7 @@ class Board():
         for pawn_dict in pawn_queryset:
             allowed_moves_dict = []
             for allowed_move in self.allowed_move(pawn_dict["code"], pawn_dict["owner"],
-                                                  pawn_dict["vertical_coord"], pawn_dict["horizontal_coord"],player):
+                                                  pawn_dict["vertical_coord"], pawn_dict["horizontal_coord"], player):
                 allowed_moves_dict.append(allowed_move.to_dict())
             pawn_dict["allowed_move"] = allowed_moves_dict
         return pawn_queryset

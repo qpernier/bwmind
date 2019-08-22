@@ -2,7 +2,11 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from app.board.coord import Coord
-from .models import IA, Game, Pawn, PawnsType
+
+from app.board.move import Move
+
+from app.IA import IA
+from .models import Game, Pawn, PawnsType, IA as IA_model
 from .board.board import Board
 from django.http import HttpResponse
 from django.core import serializers
@@ -13,13 +17,13 @@ import json
 Get All ias
 """
 def ias(request):
-    return HttpResponse(serializers.serialize("json", IA.objects.all()))
+    return HttpResponse(serializers.serialize("json", IA_model.objects.all()))
 
 """
 Create a new game
 """
 def new_game(request):
-    ia = IA.objects.get(code=request.GET.get('iaCode', ''))
+    ia = IA_model.objects.get(code=request.GET.get('iaCode', ''))
     game = Game(fk_ia2=ia)
     game.save()
     board = Board()
@@ -43,23 +47,20 @@ def play(request):
         moved_pawn = Pawn.objects.get(id=params["pawn_id"])
         game = Game.objects.get(id=params["game_id"])
         destination = Coord(params["vertical_coord"], params["horizontal_coord"])
+        move = Move(params["pawn_id"], destination)
         #check move allowed
         board = Board()
         board.buildBoard(game)
         if board.is_move_allowed(moved_pawn, destination, "player1"):
             game.strokes_number = game.strokes_number + 1
             game.save()
-            #kill pawn if needed
-            to_kill = Pawn.objects.filter(vertical_coord=destination.vertical_coord, horizontal_coord=destination.horizontal_coord)
-            for killed_pawn in to_kill:
-                killed_pawn.deadly_stroke = game.strokes_number
-                killed_pawn.save()
-            #move pawn
-            moved_pawn.vertical_coord = destination.vertical_coord
-            moved_pawn.horizontal_coord = destination.horizontal_coord
-            moved_pawn.save()
+            Pawn.move_pawn_and_kill_if_needed(move, game.strokes_number)
+            #TODO control check mat
             #move player 2 pawn with ia
-            #TODO
+            ia = IA(game, "player2")
+            ia_move = ia.play()
+            Pawn.move_pawn_and_kill_if_needed(ia_move, game.strokes_number)
+            #TODO control check mat
 
         return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game, "player1")))
     elif request.method == 'OPTIONS':

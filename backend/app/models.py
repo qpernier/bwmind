@@ -58,3 +58,21 @@ class Pawn(models.Model):
             for row in cursor.fetchall()
         ]
 
+    """
+    Move a pawn and if needed kill the destination pawn
+    """
+    @staticmethod
+    def move_pawn_and_kill_if_needed(move, strokes_number):
+        # kill pawn if needed
+        to_kill = Pawn.objects.filter(vertical_coord=move.coord.vertical_coord,
+                                      horizontal_coord=move.coord.horizontal_coord)
+        for killed_pawn in to_kill:
+            killed_pawn.deadly_stroke = strokes_number
+            killed_pawn.save()
+        # move pawn
+        moved_pawn = Pawn.objects.get(id=move.pawn_id)
+        moved_pawn.vertical_coord = move.coord.vertical_coord
+        moved_pawn.horizontal_coord = move.coord.horizontal_coord
+        moved_pawn.save()
+
+

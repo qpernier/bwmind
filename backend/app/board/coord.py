@@ -1,4 +1,8 @@
-class Coord():
+"""
+represente a coordinate
+"""
+
+class Coord:
     def __init__(self, vertical_coord, horizontal_coord):
         self.vertical_coord = vertical_coord
         self.horizontal_coord = horizontal_coord

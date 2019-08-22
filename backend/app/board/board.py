@@ -82,8 +82,6 @@ class Board:
         for pawn_dict in pawn_queryset:
             self.board[pawn_dict["vertical_coord"]][pawn_dict["horizontal_coord"]] = Pawn(pawn_dict["owner"],
                                                                                           pawn_dict["code"])
-#      pp = pprint.PrettyPrinter(indent=4)
-#       pp.pprint(self.board)
 
     """
     List all allowed move for a pawn
@@ -107,7 +105,7 @@ class Board:
             allowed_moves = self._allowed_move_knight(vertical_coord, horizontal_coord, pawn.owner)
 
         if check_king_under_attack:
-            allowed_moves = self._remove_king_under_attack_moves(Coord(vertical_coord, horizontal_coord ),allowed_moves, pawn, player)
+            allowed_moves = self._remove_king_under_attack_moves(Coord(vertical_coord, horizontal_coord), allowed_moves, pawn, player)
 
         return allowed_moves
 
@@ -122,15 +120,19 @@ class Board:
             #remove last position
             board[initialCoord.vertical_coord].pop(initialCoord.horizontal_coord)
             #add new position
-            board[initialCoord.vertical_coord][initialCoord.horizontal_coord] = pawn
+            board[move.vertical_coord][move.horizontal_coord] = pawn
             #process enemy moves
             enemy_moves = []
             for vertical_coord in range(8):
                 for horizontal_coord in range(8):
-                    if self._is_enemy(Coord(vertical_coord,horizontal_coord), player, board):
+                    if self._is_enemy(Coord(vertical_coord, horizontal_coord), player, board):
                         enemy_pawn = board[vertical_coord][horizontal_coord]
                         enemy_moves.extend(self.allowed_move(enemy_pawn.pawn_type, enemy_pawn.owner, vertical_coord, horizontal_coord, enemy, False))
             kings_coord = self._get_king_coordinate(board, player)
+#            print("kings_coord")
+#            print(kings_coord)
+#            print("ennemy moves")
+#            print(enemy_moves)
             if kings_coord not in enemy_moves:
                 safe_allowed_moves.append(move)
 
@@ -149,38 +151,42 @@ class Board:
         raise Exception("No king found")
 
 
-    def _allowed_move_pawn_player1(self, vertical_coord, horizontal_coord, disable_no_attack_moves=False):
+    def _allowed_move_pawn_player1(self, vertical_coord, horizontal_coord, check_king_under_attack=False):
         allowed_move = []
         if vertical_coord == 7:
             return []
-        if self._is_empty(horizontal_coord, vertical_coord+1, self.board) and not disable_no_attack_moves:
+        if self._is_empty(horizontal_coord, vertical_coord+1, self.board) and not check_king_under_attack:
             allowed_move.append(Coord(vertical_coord+1, horizontal_coord))
 
-        if not self._is_empty(horizontal_coord - 1, vertical_coord+1, self.board) and self.board[vertical_coord+1][horizontal_coord-1].owner == "player2":
+        if (not self._is_empty(horizontal_coord - 1, vertical_coord+1, self.board) and self.board[vertical_coord+1][horizontal_coord-1].owner == "player2") \
+                or (check_king_under_attack and not self._is_mine(Coord(vertical_coord + 1,horizontal_coord - 1), "player1", self.board)):
             allowed_move.append(Coord(vertical_coord + 1, horizontal_coord-1))
 
-        if not self._is_empty(horizontal_coord + 1, vertical_coord+1, self.board) and self.board[vertical_coord+1][horizontal_coord+1].owner == "player2":
+        if (not self._is_empty(horizontal_coord + 1, vertical_coord+1, self.board) and self.board[vertical_coord+1][horizontal_coord+1].owner == "player2") \
+           or (check_king_under_attack and not self._is_mine(Coord(vertical_coord + 1, horizontal_coord + 1), "player1", self.board)):
             allowed_move.append(Coord(vertical_coord + 1, horizontal_coord+1))
 
-        if self._is_empty(horizontal_coord, vertical_coord+1, self.board) and self._is_empty(horizontal_coord, vertical_coord+2, self.board) and vertical_coord == 1 and not disable_no_attack_moves:
+        if vertical_coord == 1 and self._is_empty(horizontal_coord, vertical_coord+1, self.board) and self._is_empty(horizontal_coord, vertical_coord+2, self.board) and not check_king_under_attack:
             allowed_move.append(Coord(vertical_coord+2, horizontal_coord))
 
         return allowed_move
 
-    def _allowed_move_pawn_player2(self, vertical_coord, horizontal_coord, disable_no_attack_moves=False):
+    def _allowed_move_pawn_player2(self, vertical_coord, horizontal_coord, check_king_under_attack=False):
         allowed_move = []
         if vertical_coord == 0:
             return []
-        if self._is_empty(horizontal_coord, vertical_coord-1, self.board)and not disable_no_attack_moves:
+        if self._is_empty(horsizontal_coord, vertical_coord-1, self.board)and not check_king_under_attack:
             allowed_move.append(Coord(vertical_coord-1, horizontal_coord))
 
-        if not self._is_empty(horizontal_coord - 1, vertical_coord-1, self.board) and self.board[vertical_coord-1][horizontal_coord-1].owner == "player1":
+        if (not self._is_empty(horizontal_coord - 1, vertical_coord-1, self.board) and self.board[vertical_coord-1][horizontal_coord-1].owner == "player1") \
+                or (check_king_under_attack and not self._is_mine(Coord(vertical_coord-1,horizontal_coord - 1), "player12", self.board)):
             allowed_move.append(Coord(vertical_coord - 1, horizontal_coord-1))
 
-        if not self._is_empty(horizontal_coord + 1, vertical_coord-1, self.board) and self.board[vertical_coord-1][horizontal_coord+1].owner == "player1":
+        if (not self._is_empty(horizontal_coord + 1, vertical_coord - 1, self.board) and self.board[vertical_coord-1][horizontal_coord+1].owner == "player1") \
+                or (check_king_under_attack and not self._is_mine(Coord(vertical_coord - 1,horizontal_coord + 1), "player2", self.board)):
             allowed_move.append(Coord(vertical_coord - 1, horizontal_coord+1))
 
-        if self._is_empty(horizontal_coord, vertical_coord-1, self.board) and self._is_empty(horizontal_coord, vertical_coord-2, self.board) and vertical_coord == 6 and not disable_no_attack_moves:
+        if vertical_coord == 6 and self._is_empty(horizontal_coord, vertical_coord-1, self.board) and self._is_empty(horizontal_coord, vertical_coord-2, self.board) and not check_king_under_attack:
             allowed_move.append(Coord(vertical_coord-2, horizontal_coord))
 
         return allowed_move

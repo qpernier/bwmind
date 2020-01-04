@@ -109,6 +109,11 @@ class Board:
 
         return allowed_moves
 
+    """ return 'checkmate' if player 'player' is checkmate", 'draw' if players are draw, '' else """
+    def is_check_mate_or_draw(self, player):
+        #TODO
+        return '';
+
     """
     Remove king under attack from allowed moves
     """

@@ -46,7 +46,13 @@ export class GameComponent implements OnInit {
   /**True if spinner should be displayed */
   displaySpinner:boolean = false;
 
-  constructor(private route: ActivatedRoute, private gameService: GameService) {
+  /**Winner of the game */
+  winner:string = null;
+
+  /**Display end pop up */
+  displayEndPopUP = false;
+
+  constructor(private route: ActivatedRoute, private gameService: GameService, private router: Router) {
     this.buildBoard();
   }
 
@@ -72,13 +78,31 @@ export class GameComponent implements OnInit {
       pawnToMove.vertical_coord = square.verticalCoord;
       this.pawns = _.cloneDeep(this.pawns);
       this.gameService.play(this.gameId, this.selectedPawn, square).subscribe( 
-        (res:Pawn[]) => {
-          this.pawns = res;
-          this.pawns = _.cloneDeep(this.pawns)
+        (res:Pawn[]|string) => {
+          if(res == "player1" || res == "player2" || res == "draw"){
+            this.end(res);
+          }else{
+            this.pawns = res as Pawn[];
+            this.pawns = _.cloneDeep(this.pawns)
+          }
           this.displaySpinner = false;
         });
     }
 
+  }
+
+  /**
+   * End the game
+   * @param result 
+   */
+  private end(result){
+    this.winner = result;
+    this.displayEndPopUP = true;
+  }
+
+  /**Navigate to the score screen */
+  goToScore(){
+    this.router.navigateByUrl('score/' + this.winner);
   }
 
   /**Pawn click handler */

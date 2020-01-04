@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Coord } from '../models/coord';
 import { Square } from '../models/square';
+import { parseWebDriverCommand } from 'blocking-proxy/built/lib/webdriver_commands';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class GameService {
   /**
    * Create new game
    */
-  newGame(iaCode: string): Observable<Pawn[]> {
-    return this.http.get<Pawn[]>(Urls.newGame + iaCode).pipe(
+  newGame(iaCode: string): Observable<Pawn[]|string> {
+    return this.http.get<Pawn[]|string>(Urls.newGame + iaCode).pipe(
       map(this.dictToPawn)
     );
   }
@@ -35,7 +36,7 @@ export class GameService {
    * @param pawn Move a pawn to target square and get the player2 move from backend
    * @param square 
    */
-  play(gameId: number, pawn:Pawn, square:Square){
+  play(gameId: number, pawn:Pawn, square:Square):Observable<string|Pawn[]>{
     return this.http.post(Urls.play, 
       {"game_id": gameId, "pawn_id": pawn.id, "vertical_coord": square.verticalCoord, "horizontal_coord": square.horizontalCoord}
       ,this.httpOptions).pipe(
@@ -46,8 +47,12 @@ export class GameService {
   /**
    * Convert http response datas to a list of pawns with allowed moves
    */
-  private dictToPawn(pawnDict):Pawn[]{
-    let pawnList:Pawn[] = [];
+  private dictToPawn(pawnDict):Pawn[]|string{
+    if (pawnDict == "player1" || pawnDict == "player2" || pawnDict == "draw"){
+      return pawnDict;
+    }
+
+    let pawnList:Pawn[] = []; 
     for (let pawn of pawnDict) {
       let allowedMoves = [];
       if (pawn['allowed_move'] !== null && pawn['allowed_move'] !== undefined) {

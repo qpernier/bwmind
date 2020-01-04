@@ -15,4 +15,18 @@
         <div *ngIf=displaySpinner class="spinner">
                 <p-progressSpinner></p-progressSpinner>
         </div>
+
+        <p-dialog header="Partie terminée" [(visible)]="displayEndPopUP" [closable]=false [modal]=true>
+                <div *ngIf="winner == 'draw'">
+                        <label> La partie se termine par une égalité !</label>
+                </div>
+                <div *ngIf="winner == 'player1'">
+                        <label> La partie se termine par une victoire du joueur blanc.</label>
+                </div>
+                <div *ngIf="winner == 'player2'">
+                        <label> La partie se termine par une victoire du joueur noir.</label>
+                </div>
+                <br/> <br/> 
+                <p-button label="Ecran des scores" (onClick)="goToScore()"></p-button>
+        </p-dialog>
 </div>

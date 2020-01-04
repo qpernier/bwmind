@@ -35,7 +35,8 @@ def new_game(request):
                      vertical_coord=pawn["vertical_coord"],
                      horizontal_coord=pawn["horizontal_coord"])
         pawn.save()
-    return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game,"player1")))
+    print(json.dumps(board.get_pawns_and_allowed_moves(game, "player1")))
+    return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game, "player1")), content_type='application/json')
 
 """
 Move pawn from player 1 then play for player 2
@@ -55,13 +56,23 @@ def play(request):
             game.strokes_number = game.strokes_number + 1
             game.save()
             Pawn.move_pawn_and_kill_if_needed(move, game.strokes_number)
-            #TODO control check mat
+            # control check mat
+            board.buildBoard(game)
+            check_mate = board.is_check_mate_or_draw("player2")
+            if check_mate == "checkmate":
+                return HttpResponse(json.dumps("player1"))
+            if check_mate == "draw":
+                return HttpResponse(json.dumps("draw"))
             #move player 2 pawn with ia
             ia = IA(game, "player2")
             ia_move = ia.play()
             Pawn.move_pawn_and_kill_if_needed(ia_move, game.strokes_number)
-            #TODO control check mat
-
+            # control check mat
+            check_mate = board.is_check_mate_or_draw("player1")
+            if check_mate == "checkmate":
+                return HttpResponse(json.dumps("player2"))
+            if check_mate == "draw":
+                return HttpResponse(json.dumps("draw"))
         return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game, "player1")))
     elif request.method == 'OPTIONS':
         return HttpResponse("ok")

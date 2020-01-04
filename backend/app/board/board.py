@@ -175,7 +175,7 @@ class Board:
         allowed_move = []
         if vertical_coord == 0:
             return []
-        if self._is_empty(horsizontal_coord, vertical_coord-1, self.board)and not check_king_under_attack:
+        if self._is_empty(horizontal_coord, vertical_coord-1, self.board)and not check_king_under_attack:
             allowed_move.append(Coord(vertical_coord-1, horizontal_coord))
 
         if (not self._is_empty(horizontal_coord - 1, vertical_coord-1, self.board) and self.board[vertical_coord-1][horizontal_coord-1].owner == "player1") \

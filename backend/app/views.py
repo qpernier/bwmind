@@ -35,7 +35,6 @@ def new_game(request):
                      vertical_coord=pawn["vertical_coord"],
                      horizontal_coord=pawn["horizontal_coord"])
         pawn.save()
-    print(json.dumps(board.get_pawns_and_allowed_moves(game, "player1")))
     return HttpResponse(json.dumps(board.get_pawns_and_allowed_moves(game, "player1")), content_type='application/json')
 
 """

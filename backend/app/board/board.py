@@ -54,9 +54,10 @@ class Board:
         self.buildBoard(game, pawn_queryset)
         for pawn_dict in pawn_queryset:
             allowed_moves_dict = []
-            for allowed_move in self.allowed_move(pawn_dict["code"], pawn_dict["owner"],
-                                                  pawn_dict["vertical_coord"], pawn_dict["horizontal_coord"], player):
-                allowed_moves_dict.append(allowed_move.to_dict())
+            if pawn_dict["owner"] == player:
+                for allowed_move in self.allowed_move(pawn_dict["code"], pawn_dict["owner"],
+                                                      pawn_dict["vertical_coord"], pawn_dict["horizontal_coord"], player):
+                    allowed_moves_dict.append(allowed_move.to_dict())
             pawn_dict["allowed_move"] = allowed_moves_dict
         return pawn_queryset
 
@@ -73,7 +74,6 @@ class Board:
     """
       Build the board to know where are each pawns
       """
-
     def buildBoard(self, game, pawn_queryset=None):
         self.board = {0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}}
         if pawn_queryset is None:
@@ -109,10 +109,26 @@ class Board:
 
         return allowed_moves
 
-    """ return 'checkmate' if player 'player' is checkmate", 'draw' if players are draw, '' else """
+    """ Check if the game ends """
     def is_check_mate_or_draw(self, player):
-        #TODO
-        return '';
+        board = copy.deepcopy(self.board)
+        no_move = self._no_move_allowed(player, board)
+        if self._is_king_under_attack(player, board) and no_move:
+            return 'checkmate';
+        elif no_move:
+            return 'draw'
+        else:
+            return ''
+
+    """Check if no move allowed for a player"""
+    def _no_move_allowed(self, player, board):
+        for vertical_coord in board:
+            for horizontal_coord in board[vertical_coord]:
+                pawn = board[vertical_coord][horizontal_coord]
+                if pawn.get_owner() == player and self.allowed_move(pawn.pawn_type, pawn.owner, vertical_coord, horizontal_coord, player):
+                    return False
+        return True
+
 
     """
     Remove king under attack from allowed moves
@@ -127,21 +143,45 @@ class Board:
             #add new position
             board[move.vertical_coord][move.horizontal_coord] = pawn
             #process enemy moves
-            enemy_moves = []
-            for vertical_coord in range(8):
-                for horizontal_coord in range(8):
-                    if self._is_enemy(Coord(vertical_coord, horizontal_coord), player, board):
-                        enemy_pawn = board[vertical_coord][horizontal_coord]
-                        enemy_moves.extend(self.allowed_move(enemy_pawn.pawn_type, enemy_pawn.owner, vertical_coord, horizontal_coord, enemy, False))
-            kings_coord = self._get_king_coordinate(board, player)
-#            print("kings_coord")
-#            print(kings_coord)
-#            print("ennemy moves")
-#            print(enemy_moves)
+            enemy_moves = self.process_ennemy_moves(player, board, pawn, move)
+            if pawn.pawn_type == "king":
+                kings_coord = move
+            else:
+                kings_coord = self._get_king_coordinate(board, player)
             if kings_coord not in enemy_moves:
                 safe_allowed_moves.append(move)
 
         return safe_allowed_moves
+
+    """Process ennemy moves"""
+    def process_ennemy_moves(self, player, board, pawn = None, move = None):
+        if pawn is not None and pawn.pawn_type == "king":
+            shadowBoard = copy.deepcopy(board)
+            shadowBoard[move.vertical_coord][move.horizontal_coord] = pawn
+        else:
+            shadowBoard = board
+
+        enemy = "player2" if player == "player1" else "player1"
+        enemy_moves = []
+        # utilisation du nouveau board pour les calculs suivants
+        old_board = self.board
+        self.board = shadowBoard
+        for vertical_coord in range(8):
+            for horizontal_coord in range(8):
+                if self._is_enemy(Coord(vertical_coord, horizontal_coord), player, shadowBoard):
+                    enemy_pawn = shadowBoard[vertical_coord][horizontal_coord]
+                    enemy_moves.extend(
+                        self.allowed_move(enemy_pawn.pawn_type, enemy_pawn.owner, vertical_coord, horizontal_coord,
+                                          enemy, False))
+        self.board = old_board
+        return enemy_moves
+
+    """Return true if king is under attack"""
+    def _is_king_under_attack(self, player, board):
+        enemy = "player2" if player == "player1" else "player1"
+        enemy_moves = self.process_ennemy_moves(player, board)
+        kings_coord = self._get_king_coordinate(board, player)
+        return kings_coord in enemy_moves
 
     """
     Return the king coordinate of the player 'player'

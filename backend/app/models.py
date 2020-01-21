@@ -73,6 +73,11 @@ class Pawn(models.Model):
         moved_pawn = Pawn.objects.get(id=move.pawn_id)
         moved_pawn.vertical_coord = move.coord.vertical_coord
         moved_pawn.horizontal_coord = move.coord.horizontal_coord
+        print("moved pawn")
+        print(moved_pawn.fk_pawns_type.code)
+        #promotion : pawn turned into queen
+        if moved_pawn.fk_pawns_type.code == "pawn" and (moved_pawn.owner == "player1" and moved_pawn.vertical_coord == 7) or (moved_pawn.owner == "player2" and moved_pawn.vertical_coord == 0):
+            moved_pawn.fk_pawns_type_id = PawnsType.objects.get(code="queen")
         moved_pawn.save()
 
 

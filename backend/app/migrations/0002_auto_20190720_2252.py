@@ -8,6 +8,9 @@ def add_IA(apps, schema_editor):
     IA_model = apps.get_model('app', 'IA')
     ia = IA_model(name="random", code="random")
     ia.save()
+    IA_model2 = apps.get_model('app', 'IA')
+    ia = IA_model2(name="basic", code="basic")
+    ia.save()
 
 def add_pawn_types(apps, schema_editor):
     types = {}

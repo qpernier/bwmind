@@ -27,9 +27,9 @@ def new_game(request):
     game = Game(fk_ia2=ia)
     game.save()
     board = Board()
-    for pawn in board.initialPosition():
+    for pawn in board.initial_position():
         pawns_type = PawnsType.objects.get(code=pawn["pawns_type"])
-        pawn = Pawn(fk_game=game ,
+        pawn = Pawn(fk_game=game,
                      fk_pawns_type=pawns_type,
                      owner=pawn["owner"],
                      vertical_coord=pawn["vertical_coord"],

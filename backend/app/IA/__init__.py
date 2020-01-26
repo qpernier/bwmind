@@ -1,6 +1,6 @@
 from app.board.board import Board
-from app.models import IA as IA_model
 from app.IA.random import Random
+from app.IA.basic import Basic
 
 
 class IA():
@@ -11,6 +11,9 @@ class IA():
         self.player = player
         if self.ia_model.code == "random":
             self.ia = Random()
+        elif self.ia_model.code == "basic":
+            self.ia = Basic()
+
 
     def play(self):
         board = Board()

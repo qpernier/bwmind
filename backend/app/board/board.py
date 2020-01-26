@@ -1,4 +1,5 @@
 from app.board.coord import Coord
+from app.board.shadowMove import ShadowMove
 from app.models import Pawn as Pawn_model
 from app.board.pawn import Pawn
 import pprint
@@ -7,8 +8,31 @@ import copy
 
 class Board:
     board = { 0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {} }
+    pp = pprint.PrettyPrinter(indent=4)
 
-    def initialPosition(self):
+    def __init__(self, board = None):
+        if board is not None:
+            self.board = copy.deepcopy(board)
+
+    def get_board(self):
+        return self.board
+
+    """
+    Get a new bord including the move
+    """
+    def get_son(self, move):
+        board = Board(self.get_board())
+        board.move(move)
+        return board
+
+    """
+    Move a pawn in the board
+    """
+    def move(self, move):
+        pawn = self.board[move.get_initial_coord().vertical_coord].pop(move.get_initial_coord().horizontal_coord)
+        self.board[move.get_dest_coord().vertical_coord][move.get_dest_coord().horizontal_coord] = pawn
+
+    def initial_position(self):
         pawns=[]
         pawns.append({"pawns_type": "king", "owner": "player1", "vertical_coord": 0, "horizontal_coord": 4})
         pawns.append({"pawns_type": "queen", "owner": "player1", "vertical_coord": 0, "horizontal_coord": 3})
@@ -43,6 +67,20 @@ class Board:
         pawns.append({"pawns_type": "pawn", "owner": "player2", "vertical_coord": 6, "horizontal_coord": 6})
         pawns.append({"pawns_type": "pawn", "owner": "player2", "vertical_coord": 6, "horizontal_coord": 7})
         return pawns
+
+    """
+    Get allowed moves from board
+    """
+    def get_allowed_moves(self, player):
+        allowed_moves = []
+        for vertical_coord in self.board:
+            for horizontal_coord in self.board[vertical_coord]:
+                pawn = self.board[vertical_coord][horizontal_coord]
+                if pawn.get_owner() == player :
+                    for coord in self.allowed_move(pawn.pawn_type, pawn.owner, vertical_coord, horizontal_coord, player):
+                        shadowMoves = ShadowMove(Coord(vertical_coord,horizontal_coord),coord)
+                        allowed_moves.append(shadowMoves)
+        return allowed_moves
 
     """
     Get pawns and allowed moves for a game
@@ -163,7 +201,7 @@ class Board:
 
         enemy = "player2" if player == "player1" else "player1"
         enemy_moves = []
-        # utilisation du nouveau board pour les calculs suivants
+        # use new board for next calculation
         old_board = self.board
         self.board = shadowBoard
         for vertical_coord in range(8):
@@ -178,7 +216,6 @@ class Board:
 
     """Return true if king is under attack"""
     def _is_king_under_attack(self, player, board):
-        enemy = "player2" if player == "player1" else "player1"
         enemy_moves = self.process_ennemy_moves(player, board)
         kings_coord = self._get_king_coordinate(board, player)
         return kings_coord in enemy_moves
